@@ -1,0 +1,10 @@
+[Core]
+Name = Test Plugin
+Module = test
+
+[Documentation]
+Author = Shuairan
+Version = 0.1
+Website = http://problemloeser.org
+Description = plugin for controlling the computer screen (turning on, off)
+

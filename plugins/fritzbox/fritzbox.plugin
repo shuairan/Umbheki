@@ -1,0 +1,10 @@
+[Core]
+Name = Fritzbox Plugin
+Module = fritzbox
+
+[Documentation]
+Author = Shuairan
+Version = 0.1
+Website = http://problemloeser.org
+Description = plugin for the fritzbox (telnet has to be enabled)
+

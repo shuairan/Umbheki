@@ -1,0 +1,10 @@
+[Core]
+Name = Phone Plugin
+Module = phone
+
+[Documentation]
+Author = Shuairan
+Version = 0.1
+Website = http://problemloeser.org
+Description = plugin for phone events
+

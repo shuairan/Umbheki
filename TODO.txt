@@ -1,0 +1,18 @@
+ToDo:
+    
+    Core
+        Configuration System
+        Eventsystem + Listener
+        Verschachteltes Pluginsystem
+        Logging für daemon in ne file
+        i10n
+        
+        
+    Plugins
+        DBus
+        OSD
+        Lirc
+        VLC
+    
+    GUI
+        Gui for Configuration

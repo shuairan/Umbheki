@@ -1,0 +1,10 @@
+[Core]
+Name = VLC
+Module = vlc
+
+[Documentation]
+Author = Shuairan
+Version = 0.1
+Website = http://problemloeser.org
+Description = plugin for controlling the vlc mediaplayer via webinterface
+
