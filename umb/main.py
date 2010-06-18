@@ -1,6 +1,8 @@
 import os, sys
 from umb.UmbPlugin import UmbPlugin
 from yapsy.PluginManager import PluginManager
+import UmbConfig
+from UmbConfig import Action
 import logging
 import inspect
 from pprint import pprint
@@ -15,9 +17,10 @@ class Umbheki:
     def __init__(self):
         self.trigger = {}
         self.events = {}
-        
+        self.actions = UmbConfig.loadActions()
+        logger.debug(self.actions)
         self.loadPlugins()
-        self.trigger["Test.out"]()
+        
         
         
     def loadPlugins(self):
@@ -71,6 +74,12 @@ class Umbheki:
         else:
             logger.error("Trigger '%s' not found" % cmd)
     
+    def getAction(self, event):
+        logger.debug("Get Action: %s " % event);
+        if event in self.actions:
+            return self.actions[event]
+        else:
+            return None        
     
     def watchdog(self, event, *args):
         """
@@ -79,11 +88,17 @@ class Umbheki:
         """TODO: Makros etc per Konfigurationsdatei!"""
         logger = logging.getLogger("Umbheki Watchdog")
         logger.debug("event raised: '%s'" % event)
+        
+        action = self.getAction(event)
+        if action is not None:
+            self.callTrigger(action.trigger);
+        
+        """
         if event=="VLC.stopped":
             self.callTrigger("Test.out")
         if event=="Fritzbox.incomingCall":
             self.callTrigger("VLC.pause")
-
+        """
 
 class NotYetImplemented(Exception):
     def __init__(self):

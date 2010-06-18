@@ -11,12 +11,12 @@ class Test(UmbPlugin):
         UmbPlugin.__init__(self, Test.events)
         self.thread_killed = False
         self.th = threading.Thread(target = self.thread)
-        #self.th.start()
+        self.th.start()
         
     def thread(self):
         while not self.thread_killed:
             
-            self.event.everyTenSeconds()
+            self.raiseEvent.everyTenSeconds()
             for i in range(10):
                 time.sleep(1)
                 if self.thread_killed:

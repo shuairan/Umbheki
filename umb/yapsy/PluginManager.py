@@ -211,20 +211,20 @@ class PluginManager(object):
 		try:
 			config_parser.read(candidate_infofile)
 		except:
-			logger.debug("Could not parse the plugin file %s" % candidate_infofile)					
+			logger.error("Could not parse the plugin file %s" % candidate_infofile)					
 			return (None, None)
 		# check if the basic info is available
 		if not config_parser.has_section("Core"):
-			logger.debug("Plugin info file has no 'Core' section (in %s)" % candidate_infofile)					
+			logger.error("Plugin info file has no 'Core' section (in %s)" % candidate_infofile)					
 			return (None, None)
 		if not config_parser.has_option("Core","Name") or not config_parser.has_option("Core","Module"):
-			logger.debug("Plugin info file has no 'Name' or 'Module' section (in %s)" % candidate_infofile)
+			logger.error("Plugin info file has no 'Name' or 'Module' section (in %s)" % candidate_infofile)
 			return (None, None)
 		# check that the given name is valid
 		name = config_parser.get("Core", "Name")
 		name = name.strip()
 		if PLUGIN_NAME_FORBIDEN_STRING in name:
-			logger.debug("Plugin name contains forbiden character: %s (in %s)" % (PLUGIN_NAME_FORBIDEN_STRING,
+			logger.error("Plugin name contains forbiden character: %s (in %s)" % (PLUGIN_NAME_FORBIDEN_STRING,
 																				   candidate_infofile))
 			return (None, None)
 		# start collecting essential info
@@ -288,7 +288,7 @@ class PluginManager(object):
 #					print candidate_infofile
 					plugin_info = self.gatherBasicPluginInfo(dirpath,filename)
 					if plugin_info is None:
-						logger.debug("""Candidate rejected: 
+						logger.error("""Candidate rejected: 
 	%s""" % candidate_infofile)						
 						continue
 					# now determine the path of the file to execute,
@@ -333,8 +333,8 @@ class PluginManager(object):
 			try:
 				execfile(candidate_filepath+".py",candidate_globals)
 			except Exception,e:
-				logger.debug("Unable to execute the code in plugin: %s" % candidate_filepath)
-				logger.debug("\t The following problem occured: %s %s " % (os.linesep, e))
+				logger.error("Unable to execute the code in plugin: %s" % candidate_filepath)
+				logger.error("\t The following problem occured: %s %s " % (os.linesep, e))
 				if "__init__" in  os.path.basename(candidate_filepath):
 					sys.path.remove(plugin_info.path)
 				continue

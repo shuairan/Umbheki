@@ -1,0 +1,12 @@
+<umbehki>
+    <actions>
+        <action name="VLC.stopped">
+            <trigger name="Test.out"/>
+        </action>
+        
+        <action name="Fritzbox.incomingCall">
+            <trigger name="VLC.pause"/>
+        </action>
+        
+    </actions>
+</umbehki>
