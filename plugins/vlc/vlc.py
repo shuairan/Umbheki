@@ -22,7 +22,7 @@ class VLC(UmbPlugin):
         
         self.thread_killed = False
         self.th = threading.Thread( target = self.thread)
-        #self.th.start()
+        self.th.start()
         
     def thread(self):
         while not self.thread_killed:
@@ -50,18 +50,17 @@ class VLC(UmbPlugin):
 
     @trigger 
     def stop(self):
-        state = getVlcState()
+        state = self.getVlcState()
         if state==PLAYING or state==PAUSED:
             urllib.urlopen(VLC_WEB_STATUS_URL+VLC_STOP)
 
     def checkState(self):
-        state = self.getVlcState
-        
-        if state==STOP and self.lastState==PLAYING:
+        state = self.getVlcState()
+        if state==STOPPED and self.lastState==PLAYING:
             self.stopped()
         self.lastState = state
 
     def getVlcState(self, url=VLC_WEB_STATUS_URL):
         vlcxml = xml.dom.minidom.parse(urllib.urlopen(url))
-        state = vlcxml.getElementsByTagName('state')[0].firstChild.toxml()
-        return state
+        curstate = vlcxml.getElementsByTagName('state')[0].firstChild.toxml()
+        return curstate

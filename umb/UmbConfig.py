@@ -21,15 +21,30 @@ def loadActions(file='config.xml'):
         
         for trigger in triggers:
             triggerName = trigger.getAttribute('name');
-            logger.debug("Adding Trigger '%s' to Action '%s' " % (triggerName, name))
-            actionList[name].addTrigger(triggerName);
+            args = trigger.getAttribute('args');
+            logger.debug("Adding Trigger '%s' to Action '%s' with args %s " % (triggerName, name, args))
+            actionList[name].addTrigger(triggerName, args);
 
     return actionList;
     
 
 class Action:
     def __init__(self):
-        self.trigger = {};
+        self.triggers = [];
 
-    def addTrigger(self, trigger, *args):
-        self.trigger = trigger;
+    """ Todo: Add support for arguments"""
+    def addTrigger(self, trigger, args=None):
+        self.triggers.append(Trigger(trigger,args))
+
+    def getTrigger(self, name):
+        for trigger in self.triggers:
+            if trigger.name is name:
+                return trigger
+        
+        return None
+
+
+class Trigger:
+    def __init__(self, name, args=None):
+        self.name = name
+        self.args = args

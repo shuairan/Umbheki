@@ -21,8 +21,6 @@ class Umbheki:
         logger.debug(self.actions)
         self.loadPlugins()
         
-        
-        
     def loadPlugins(self):
         logger.debug("loading Plugins")
 
@@ -64,24 +62,26 @@ class Umbheki:
                 continue
 
     
-    def callTrigger(self, cmd, *args):
+    def callTrigger(self, cmd, args=None):
         """
         trigger function: call any trigger by passing the name of the trigger
         to this function
         """
         if self.trigger.has_key(cmd):
-            self.trigger[cmd]()
+            self.trigger[cmd](args)
         else:
             logger.error("Trigger '%s' not found" % cmd)
+    
     
     def getAction(self, event):
         logger.debug("Get Action: %s " % event);
         if event in self.actions:
             return self.actions[event]
         else:
-            return None        
+            return None
     
-    def watchdog(self, event, *args):
+    
+    def watchdog(self, event, args=None):
         """
         will be called every time a event occures
         """
@@ -91,7 +91,9 @@ class Umbheki:
         
         action = self.getAction(event)
         if action is not None:
-            self.callTrigger(action.trigger);
+            for trigger in action.triggers:
+                logger.debug("Trigger called %s args: %s " %(trigger.name, trigger.args))
+                self.callTrigger(trigger.name, trigger.args);
         
         """
         if event=="VLC.stopped":
@@ -99,6 +101,7 @@ class Umbheki:
         if event=="Fritzbox.incomingCall":
             self.callTrigger("VLC.pause")
         """
+
 
 class NotYetImplemented(Exception):
     def __init__(self):
