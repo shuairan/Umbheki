@@ -25,6 +25,7 @@ def loadActions(file='config.xml'):
             actionList[name].addTrigger(triggerName);
 
     return actionList;
+    
 
 class Action:
     def __init__(self):
