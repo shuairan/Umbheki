@@ -25,8 +25,8 @@ class Daemon:
             try:
                     pid = os.fork()
                     if pid > 0:
-                            # exit first parent
-                            sys.exit(0)
+                        # exit first parent
+                        sys.exit(0)
             except OSError, e:
                     sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno, e.strerror))
                     sys.exit(1)
@@ -40,8 +40,8 @@ class Daemon:
             try:
                     pid = os.fork()
                     if pid > 0:
-                            # exit from second parent
-                            sys.exit(0)
+                        # exit from second parent
+                        sys.exit(0)
             except OSError, e:
                     sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
                     sys.exit(1)
@@ -83,6 +83,7 @@ class Daemon:
                     sys.exit(1)
            
             # Start the daemon
+            
             if not self.debugmodus:
                 self.daemonize()
             self.run()
@@ -90,7 +91,10 @@ class Daemon:
     def stop(self):
             """
             Stop the daemon
-            """
+            """   
+            if self.debugmodus:
+                sys.exit(1)
+            
             # Get the pid from the pidfile
             try:
                     pf = file(self.pidfile,'r')

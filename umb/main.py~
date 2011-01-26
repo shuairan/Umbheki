@@ -101,7 +101,7 @@ class Umbheki:
         action = self.getAction(event)
         if action is not None:
             for trigger in action.triggers:
-                logger.debug("Trigger called '%s' args: %s " %(trigger.name, trigger.args))
+                logger.debug("Trigger called %s args: %s " %(trigger.name, trigger.args))
                 self.callTrigger(trigger.name, trigger.args);
 
 

@@ -30,7 +30,7 @@ class Umbheki(daemon):
                 time.sleep(1)
             except KeyboardInterrupt:
                 print 'daemon stopped by user request. shutting down.'
-                self.stop()
+                sys.stop()
 
 if __name__ == "__main__":
     umbheki = Umbheki('/tmp/umbheki.pid')

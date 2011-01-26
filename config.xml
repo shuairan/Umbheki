@@ -1,11 +1,10 @@
 <umbehki>
     <actions>
-        <action name="VLC.stopped">
-            <trigger name="Test.out" args="VLC was Stopped!"/>
-            <trigger name="Test.out" args="VLC was really Stopped!"/>
+        <action event="VLC.stopped">
+            <trigger name="Monitor.standby"/>
         </action>
         
-        <action name="Fritzbox.incomingCall">
+        <action event="Fritzbox.incomingCall">
             <trigger name="VLC.pause"/>
         </action>
         
