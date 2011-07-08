@@ -49,7 +49,7 @@ class Umbheki:
                 module = value.im_self.__class__.__name__
                 triggerName = "%s.%s" % (module, name)
                 self.trigger[triggerName] = value
-                logger.debug("  * New Trigger: %s " % triggerName)
+                logger.info("  * New Trigger: %s " % triggerName)
                 """
             @deprecated 
             elif inspect.ismethod(value) and getattr(value, '_event', False): 
