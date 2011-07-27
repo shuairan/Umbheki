@@ -12,21 +12,24 @@ class UmbPlugin(IPlugin):
     """
     default class of Umbheki Plugins
     """
+    events = []
+    event_args = None
     
-    def __init__(self, eventList=[]):
+    def __init__(self):
         IPlugin.__init__(self)
         self.name = self.__class__.__name__
         self.logger = logging.getLogger("Plugin:%s" % self.name)
         self.raiseEvent = EventRaiser(  self,
-                                        eventList,
+                                        self.events,
+                                        self.event_args,
                                         self.logger)
         
         self.trigger = None
-        
-    def raiseEvent(self, name, eventList, logger, watchdog):
+     
+    #def raiseEvent(self, name, eventList, logger, watchdog):
         """dummy, will be set to a new EventRaiser in __init__"""
-        pass
-        
+        #pass
+    
     def eventWatchdog(self, event, *args):
         """
         DO NOT USE AND NOT OVERWRITE! 
@@ -50,11 +53,17 @@ class EventRaiser(object):
     EventRaiser object
     """
     
-    def __init__(self, parent, eventList, logger):
+    def __init__(self, parent, eventList, eventArgs, logger):
         self.parent = parent
         self.logger = logger
         self.name = self.parent.name
+
+        self.event_args = {}
+        if eventArgs is not None:
+            self.event_args = dict(zip(map( lambda x:self.name+"."+x, eventArgs.keys()), eventArgs.values()))
+
         self.createEventMethods(eventList)
+        
         
     def __call__(self, eventName=None, *args):
         """
@@ -68,9 +77,30 @@ class EventRaiser(object):
             eventmethod = sys._getframe(1).f_code.co_name
             eventName = "%s.%s" % (self.name, eventmethod)
             
+        
         self.logger.debug("Event called: %s " % eventName)
-        if len(args): self.logger.debug(args)
+        if len(args): 
+            self.logger.debug(args)
+            args = self.createEventArgumentList(eventName, args)
+            
         self.parent.eventWatchdog(eventName, args)
+
+    def createEventArgumentList(self, eventName, arguments):
+        """
+        maps the argument list (from 'event_args' in the plugin) 
+           to the arguments that came as parameter in the event call, creates a dictionary:
+           
+        """
+        eventargs = self.event_args[eventName]
+        if  len(arguments) and len(eventargs):
+            argList = dict(zip(map(lambda x:self.name+"."+x, eventargs), arguments))
+            #rest of unnamed arguments:
+            #rest = arguments[len(eventargs):]
+            #argList = argMap, rest
+        else:
+            argList = arguments
+            
+        return argList
 
     def createEventMethods(self, eventList):
         """

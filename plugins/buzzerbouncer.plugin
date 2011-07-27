@@ -1,0 +1,9 @@
+[Core]
+Name = BuzzerBouncer
+Module = buzzerbouncer
+
+[Documentation]
+Author = Shuairan
+Version = 0.1
+Website = http://problemloeser.org
+Description = toggle the pins on the NetIO to open my door

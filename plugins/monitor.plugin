@@ -1,10 +1,10 @@
 [Core]
-Name = Monitor Plugin
+Name = Monitor
 Module = monitor
 
 [Documentation]
 Author = Shuairan
 Version = 0.1
 Website = http://problemloeser.org
-Description = plugin for controlling the computer screen (turning on, off)
+Description = monitor controllings
 

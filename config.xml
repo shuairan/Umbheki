@@ -1,11 +1,26 @@
 <umbehki>
     <actions>
-        <action event="VLC.stopped">
+        
+        <!--<action event="VLC.stopped">
             <trigger name="Monitor.standby"/>
+        </action>
+        -->
+        <action event="Fritzbox.incomingCall" enabled="false">
+            <trigger name="VLC.pause"/>
         </action>
         
         <action event="Fritzbox.incomingCall">
-            <trigger name="VLC.pause"/>
+            <trigger name="Buzzerbouncer.openDoor">
+                <condition arg="Fritzbox.msn" value="3297089"/>
+            </trigger>
+            <!--<trigger name="VLC.pause"/> -->
+        </action>
+        
+        <action event="Test.everyMinute">
+            <trigger name="Test.deactivate">
+                <condition arg="Test.count" eval="{arg} &gt; 5 and {arg} &lt; 10"/>
+            </trigger>
+            <!--<trigger name="VLC.pause"/> -->
         </action>
         
     </actions>

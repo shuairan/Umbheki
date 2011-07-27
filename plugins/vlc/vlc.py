@@ -17,7 +17,7 @@ class VLC(UmbPlugin):
     events = ["stopped"]
     
     def __init__(self):
-        UmbPlugin.__init__(self, VLC.events)
+        UmbPlugin.__init__(self)
         self.lastState = None
         
         self.thread_killed = False

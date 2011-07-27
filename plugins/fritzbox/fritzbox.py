@@ -15,10 +15,11 @@ CITY_PREFIX = "0721"
 
 class Fritzbox(UmbPlugin):
     #event list:
-    events = ["incomingCall"]
-  
+    events = [ "incomingCall" ]
+    event_args = {"incomingCall": ["phonenumber", "alias", "msn"] }
+    
     def __init__(self):
-        UmbPlugin.__init__(self, Fritzbox.events)
+        UmbPlugin.__init__(self)
         self.mythread = ListenThread(self)
         self.mythread.setDaemon(True)
         self.mythread.start()
@@ -156,7 +157,7 @@ class ListenThread( threading.Thread ):
                             # if no telephone number is received with the call
                             else:
                                 self.logger.info("phonecall from an unknown person")
-                                self.phonenumber = _('unknown')
+                                self.phonenumber = 'unknown'
                                 self.alias = 'unknown'
                             
                             self.parent.raiseEvent("Fritzbox.incomingCall", self.phonenumber, self.alias, self.msn)

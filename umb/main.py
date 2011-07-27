@@ -97,14 +97,17 @@ class Umbheki:
         
         logger = logging.getLogger("Umbheki Watchdog")
         logger.debug("event raised: '%s'" % event)
+        if args:
+            logger.debug(args)
         
         action = self.getAction(event)
         if action is not None:
             for trigger in action.triggers:
-                logger.debug("Trigger called '%s' args: %s " %(trigger.name, trigger.args))
-                self.callTrigger(trigger.name, trigger.args);
-
-
+                if trigger.activated and trigger.checkCondition(args):
+                    logger.debug("Trigger called '%s' args: %s " %(trigger.name, trigger.args))
+                    self.callTrigger(trigger.name, trigger.args);
+                else:
+                    logger.debug("Trigger '%s' is deactivated or condition-check returned false" % (trigger.name))
 
 class NotYetImplemented(Exception):
     def __init__(self):
